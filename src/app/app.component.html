@@ -1,5 +1,76 @@
-<div class="max-w-screen-lg mx-auto">
-  <router-outlet/>
-  <p-button class="">Test</p-button>
-  <p-panel class="w-1/3 block">Test</p-panel>
+<div class="max-w-screen-lg h-screen mx-auto py-4 flex gap-4">
+  <div class="h-full border bg-gray-900 border-gray-700 rounded p-4 w-1/6 flex flex-col gap-4">
+    All Heroes
+    <div *ngFor="let hero of heroes" class=" h-40">
+      <div [style.background-color]="hero.rarity === Rarity.Legendary ? 'rgb(245 158 11)' : 'rgb(126 34 206)'"
+           [style.background-image]="'url('+hero.image+')'"
+           class="h-full bg-cover bg-blend-normal bg-no-repeat border rounded-t p-2">
+        <img [src]="'assets/images/military_specialites/'+hero.militarySpeciality+'.png'"
+             [alt]="hero.militarySpeciality" class="h-12">
+      </div>
+      <div class="border rounded-b border-t-0 py-1 px-2">{{ hero.name }}</div>
+    </div>
+  </div>
+  <div class="h-full border bg-gray-900 border-gray-700 rounded p-4 w-1/6 flex flex-row gap-4">
+    My Heroes
+  </div>
+  <div class="h-full border bg-gray-900 border-gray-700 rounded p-4 w-4/6 flex flex-col gap-4 overflow-auto">
+    Troops
+    <div class="border w-full bg-gray-900 border-gray-700 rounded p-4 flex flex-col gap-4">
+      Troop 1
+      <div class="flex flex-row gap-4">
+        <div class="border bg-gray-800 border-gray-700 h-40 rounded w-1/3">
+
+        </div>
+        <div class="border bg-gray-800 border-gray-700 h-40 rounded w-1/3">
+
+        </div>
+        <div class="border bg-gray-800 border-gray-700 h-40 rounded w-1/3">
+
+        </div>
+      </div>
+    </div>
+    <div class="border w-full bg-gray-900 border-gray-700 rounded p-4 flex flex-col gap-4">
+      Troop 1
+      <div class="flex flex-row gap-4">
+        <div class="border bg-gray-800 border-gray-700 h-40 rounded w-1/3">
+
+        </div>
+        <div class="border bg-gray-800 border-gray-700 h-40 rounded w-1/3">
+
+        </div>
+        <div class="border bg-gray-800 border-gray-700 h-40 rounded w-1/3">
+
+        </div>
+      </div>
+    </div>
+    <div class="border w-full bg-gray-900 border-gray-700 rounded p-4 flex flex-col gap-4">
+      Troop 1
+      <div class="flex flex-row gap-4">
+        <div class="border bg-gray-800 border-gray-700 h-40 rounded w-1/3">
+
+        </div>
+        <div class="border bg-gray-800 border-gray-700 h-40 rounded w-1/3">
+
+        </div>
+        <div class="border bg-gray-800 border-gray-700 h-40 rounded w-1/3">
+
+        </div>
+      </div>
+    </div>
+    <div class="border w-full bg-gray-900 border-gray-700 rounded p-4 flex flex-col gap-4">
+      Troop 1
+      <div class="flex flex-row gap-4">
+        <div class="border bg-gray-800 border-gray-700 h-40 rounded w-1/3">
+
+        </div>
+        <div class="border bg-gray-800 border-gray-700 h-40 rounded w-1/3">
+
+        </div>
+        <div class="border bg-gray-800 border-gray-700 h-40 rounded w-1/3">
+
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
