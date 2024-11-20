@@ -24,17 +24,36 @@ export class AppComponent {
   }
 
   handleDragEnd() {
-    this.currentlyDragged = null;
-    if (this.draggedOver) {
-
+    if (this.draggedOver && this.draggedOver.troop && this.draggedOver.slotName) {
+      let target = this.troops.find(troop => this.draggedOver.troop.id === troop.id)
+      if (target && this.draggedOver.slotName) {
+        switch (this.draggedOver.slotName) {
+          case 'commander':
+            target.heroes.commander = this.draggedHero;
+            break;
+          case 'secondInAttack':
+            target.heroes.secondInAttack = this.draggedHero;
+            break;
+          case  'thirdInAttack':
+            target.heroes.thirdInAttack = this.draggedHero;
+            break;
+          default:
+            break;
+        }
+      }
     }
+    console.log(this.troops)
+    this.currentlyDragged = null;
   }
 
-  handleDragOver($event: DragEvent) {
+  handleDragOver($event: DragEvent, troop: Troop, slotName: string) {
     if (this.draggedHero) {
       $event.preventDefault();
     }
-    this.draggedOver = $event.target;
+    let target = this.troops.find(t => t.id === troop.id)
+    if (target) {
+      this.draggedOver = {troop: target, slotName: slotName};
+    }
   }
 
   handleDragLeave($event: DragEvent) {
@@ -45,7 +64,10 @@ export class AppComponent {
   }
 
   handleTroopAddClicked() {
-    this.troops.push({id: this.troops.length + 1});
+    this.troops.push({
+      id: this.troops.length + 1,
+      heroes: {commander: undefined, secondInAttack: undefined, thirdInAttack: undefined}
+    });
   }
 
   handleRemoveTroop(id: number) {
@@ -57,7 +79,9 @@ export class AppComponent {
 type Troop = {
   id: number,
   name?: string,
-  commander?: Hero,
-  secondInAttack?: Hero,
-  thirdInAttack?: Hero
+  heroes: {
+    commander?: Hero,
+    secondInAttack?: Hero,
+    thirdInAttack?: Hero
+  },
 }
