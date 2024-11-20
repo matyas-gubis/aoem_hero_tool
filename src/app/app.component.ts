@@ -1,13 +1,16 @@
 import {Component} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Hero, heroes, Rarity} from '../data/heroes';
+import {MessageService} from 'primeng/api';
+import {Toast, ToastModule} from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ToastModule, Toast],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  providers: [MessageService]
 })
 export class AppComponent {
   title = 'aoem_hero_tool';
@@ -17,6 +20,9 @@ export class AppComponent {
   draggedOver: any;
   draggedHero?: Hero;
   troops: Troop[] = []
+
+  constructor(private messageService: MessageService) {
+  }
 
   handleDragstart($event: DragEvent, hero: Hero) {
     this.currentlyDragged = $event.target;
@@ -29,12 +35,39 @@ export class AppComponent {
       if (target && this.draggedOver.slotName) {
         switch (this.draggedOver.slotName) {
           case 'commander':
+            if (target.heroes.secondInAttack === this.draggedHero || target.heroes.thirdInAttack === this.draggedHero) {
+              this.messageService.add({
+                icon: 'pi-alert',
+                summary: 'Unable to do that',
+                detail: 'This hero is already member of this troop.',
+                severity: 'error'
+              })
+              break;
+            }
             target.heroes.commander = this.draggedHero;
             break;
           case 'secondInAttack':
+            if (target.heroes.commander === this.draggedHero || target.heroes.thirdInAttack === this.draggedHero) {
+              this.messageService.add({
+                icon: 'pi-alert',
+                summary: 'Unable to do that',
+                detail: 'This hero is already member of this troop.',
+                severity: 'error'
+              })
+              break;
+            }
             target.heroes.secondInAttack = this.draggedHero;
             break;
           case  'thirdInAttack':
+            if (target.heroes.secondInAttack === this.draggedHero || target.heroes.commander === this.draggedHero) {
+              this.messageService.add({
+                icon: 'pi-alert',
+                summary: 'Unable to do that',
+                detail: 'This hero is already member of this troop.',
+                severity: 'error'
+              })
+              break;
+            }
             target.heroes.thirdInAttack = this.draggedHero;
             break;
           default:
